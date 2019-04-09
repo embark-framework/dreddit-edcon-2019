@@ -53,17 +53,24 @@ class Create extends Component{
 
     const {create} = DReddit.methods;    
     const toSend = await create(web3.utils.toHex(ipfsHash));
-    const estimatedGas = await toSend.estimateGas();
+    //const estimatedGas = await toSend.estimateGas();
 
-    await toSend.send({from: web3.eth.defaultAccount, gas: estimatedGas + 1000});
+    let newState = {
+      isSubmitting: false
+    };
+    try {
+      await toSend.send({from: web3.eth.defaultAccount, gas: 1000000}); //estimatedGas + 1000});
+      
+      newState.content = '';
+      newState.title = '';
 
-    this.setState({
-      isSubmitting: false,
-      content: '',
-      title: ''
-    });
-
-    this.props.afterPublish();
+      this.setState(newState);
+      this.props.afterPublish();
+    }
+    catch (error) {
+      newState.error = error.message;
+      this.setState(newState);
+    }    
   }
 
   handleChange = name => event => {
@@ -87,7 +94,6 @@ class Create extends Component{
             rowsMax="20"
             fullWidth
             value={title}
-            helperText={error}
             onChange={this.handleChange('title')}
             className={classes.textField}
             margin="normal" />

@@ -40,9 +40,11 @@ contract DReddit {
 
     // @notice Create Post
     // @param _description IPFS hash of the content of the post
-    function create(bytes memory _description)
+    function create(bytes memory _description) 
         public
     {
+        require(_description.length == 64, "Please check the IPFS description hash");
+
         uint postId = posts.length++;
         posts[postId] = Post({
           creationDate: now,
