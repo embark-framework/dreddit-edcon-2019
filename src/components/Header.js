@@ -11,6 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import SearchBar from './SearchBar';
+import logo from '../images/embark-logo.png';
 
 const styles = {
     root: {
@@ -18,6 +19,12 @@ const styles = {
     },
     flex: {
       flexGrow: 1
+    },
+    logo: {
+      display: "inline-block",
+      verticalAlign: "middle",
+      width: "40px",
+      marginRight: "10px"
     }
   };
 
@@ -60,6 +67,7 @@ class Header extends Component {
           <AppBar position="fixed">
             <Toolbar className={classes.toolBar}>
               <Hidden smDown>
+                <img src={logo} alt="Logo" className={classes.logo} />
                 <Typography variant="h4" color="inherit" className={classes.flex}>
                 DReddit
                 </Typography>

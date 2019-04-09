@@ -9,8 +9,21 @@ import EmbarkJS from '../embarkArtifacts/embarkjs';
 import DReddit from '../embarkArtifacts/contracts/DReddit';
 
 import '../css/app.css';
-
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      dark: '#398689',
+      light: '#78BE97',
+      main: '#0B476D'
+      // contrastText: will be calculated to contrast with palette.primary.main
+    },
+    secondary: {
+      dark: '#E75E3B',
+      // light: will be calculated to contrast with palette.secondary.main
+      main: '#FAB266'
+    },
+    // error: will use the default color
+  },
   typography: {
     useNextVariants: true,
     suppressDeprecationWarnings: true
