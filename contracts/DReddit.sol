@@ -7,7 +7,7 @@ contract DReddit {
 
     struct Post {
         uint creationDate;   
-        bytes description;   
+        string description;   
         address owner;
         uint upvotes;  
         uint downvotes;
@@ -19,7 +19,7 @@ contract DReddit {
     event NewPost (
         uint indexed postId,
         address owner,
-        bytes description
+        string description
     );
 
     event Vote(
@@ -39,22 +39,21 @@ contract DReddit {
     }
 
     // @notice Create Post
-    // @param _description IPFS hash of the content of the post
-    function create(bytes memory _description) 
-        public
+    // @param _ipfsHash IPFS hash of the content of the post
+    function create(string memory _ipfsHash) 
+        public 
     {
-        require(_description.length == 64, "Please check the IPFS description hash");
+        require(bytes(_ipfsHash).length > 0, "IPFS hash is required");
 
-        uint postId = posts.length++;
-        posts[postId] = Post({
+        posts.push(Post({
           creationDate: now,
-          description: _description,
+          description: _ipfsHash,
           owner: msg.sender,
           upvotes: 0,
           downvotes: 0
-        });
+        }));
 
-        emit NewPost(postId, msg.sender, _description);
+        emit NewPost(posts.length - 1, msg.sender, _ipfsHash);
     }
 
     // @notice Vote on a post
@@ -68,6 +67,7 @@ contract DReddit {
         require(p.voters[msg.sender] == Ballot.NONE, 'You already voted on this post.');
 
         Ballot b = Ballot(_vote);
+        require(b != Ballot.NONE, 'Invalid vote');
 
         if (b == Ballot.UPVOTE) {
           p.upvotes++;

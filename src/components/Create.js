@@ -52,7 +52,7 @@ class Create extends Component{
     const ipfsHash = await EmbarkJS.Storage.saveText(JSON.stringify(textToSave));
 
     const {create} = DReddit.methods;    
-    const toSend = await create(web3.utils.toHex(ipfsHash));
+    const toSend = await create(ipfsHash);
     //const estimatedGas = await toSend.estimateGas();
 
     let newState = {

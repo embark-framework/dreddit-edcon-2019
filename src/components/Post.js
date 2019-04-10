@@ -1,4 +1,3 @@
-/* global web3 */
 import {Card, CardActions, CardContent, CardHeader} from '@material-ui/core';
 import React, {Component} from 'react';
 import Blockies from 'react-blockies';
@@ -77,9 +76,9 @@ class Post extends Component {
     }
 
     _loadAttributes = async () => {
-        const ipfsHash = web3.utils.toAscii(this.props.description);
+        // const ipfsHash = web3.utils.toAscii(this.props.description);
 
-        const ipfsText = await EmbarkJS.Storage.get(ipfsHash);
+        const ipfsText = await EmbarkJS.Storage.get(this.props.description);
 
         const jsonContent = JSON.parse(ipfsText);
         const title = jsonContent.title;
