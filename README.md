@@ -1,13 +1,26 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# DReddit Demo for EDCON 2019
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). It uses [Embark](https://github.com/embark-framework/embark) to run all other decentralised services (ie Geth, IPFS, Whisper, etc).
 
-## Available Scripts
+## Getting started
 
-In the project directory, you can run:
+In the project directory, run:
+```
+npm start
+```
+In another terminal, run:
+```
+embark run
+```
+## Available scripts
+Runnable scripts on this project include:
+
+### `embark run`
+This starts the Embark process and all of it's associated decentalised services. Please see [the Embark documentation](https://embark.status.im/docs/) for more information.
 
 ### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs Create React App in the development mode.<br>
+Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.

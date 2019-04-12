@@ -66,7 +66,7 @@ class Header extends Component {
         <div className={classes.root} >
           <AppBar position="fixed">
             <Toolbar className={classes.toolBar}>
-              <Hidden smDown>
+              <Hidden xsDown>
                 <img src={logo} alt="Logo" className={classes.logo} />
                 <Typography variant="h4" color="inherit" className={classes.flex}>
                 DReddit
