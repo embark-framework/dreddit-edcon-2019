@@ -1,7 +1,9 @@
-const DReddit = embark.require('Embark/contracts/DReddit');
+/* global web3, config, contract, assert */
+const DReddit = require('Embark/contracts/DReddit');
 
 const ipfsHash = 'Qmc5gCcjYypU7y28oCALwfSvxCBskLuPKWpK4qpterKC7z';
 let accounts = [];
+let postId = -1;
 
 config({
   contracts: {
@@ -11,7 +13,6 @@ config({
   accounts = _accounts;
 });
 
-
 contract('DReddit', () => {
 
   it('should work', () => {
@@ -19,7 +20,7 @@ contract('DReddit', () => {
   });
 
   it('should be able to create a post and receive it via contract event', async () => {
-    let receipt = await DReddit.methods.createPost(web3.utils.fromAscii(ipfsHash)).send();
+    let receipt = await DReddit.methods.create(web3.utils.fromAscii(ipfsHash)).send();
     const event = receipt.events.NewPost;
     postId = event.returnValues.postId;
     assert.equal(web3.utils.toAscii(event.returnValues.description), ipfsHash);
@@ -43,13 +44,13 @@ contract('DReddit', () => {
 
   it('should be able to vote in a post', async () => {
     const receipt = await DReddit.methods.vote(postId, 1).send();
-    const Vote = receipt.events.NewVote;
-    assert.equal(Vote.returnValues.owner, accounts[0]);
+    const Vote = receipt.events.Vote;
+    assert.equal(Vote.returnValues.voter, accounts[0]);
   });
 
   it('shouldn\'t be able to vote twice', async () => {
     try {
-      const receipt = await DReddit.methods.vote(postId, 1).send();
+      await DReddit.methods.vote(postId, 1).send();
       assert.fail('should have reverted before');
     } catch (error){
       assert(error.message.search('revert') > -1, 'Revert should happen');

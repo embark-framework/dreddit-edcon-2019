@@ -6,10 +6,10 @@ contract DReddit {
     enum Ballot { NONE, UPVOTE, DOWNVOTE }
 
     struct Post {
-        uint creationDate;   
-        string description;   
+        uint creationDate;
+        string description;
         address owner;
-        uint upvotes;  
+        uint upvotes;
         uint downvotes;
         mapping(address => Ballot) voters;
     }
@@ -34,14 +34,13 @@ contract DReddit {
         public
         view
         returns(uint)
-    { 
+    {
         return posts.length;
     }
 
     // @notice Create Post
     // @param _ipfsHash IPFS hash of the content of the post
-    function create(string memory _ipfsHash) 
-        public 
+    function create(string memory _ipfsHash) public
     {
         require(bytes(_ipfsHash).length > 0, "IPFS hash is required");
 
